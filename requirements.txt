@@ -2,7 +2,7 @@ lightgbm==3.2.1
 pandas==1.2.3
 numpy==1.19.5
 streamlit==0.81.0
-tensorflow==2.5.0
+tensorflow==2.0.0
 tensorflow-estimator==2.5.0
 pickleshare==0.7.5
 Werkzeug==1.0.1
