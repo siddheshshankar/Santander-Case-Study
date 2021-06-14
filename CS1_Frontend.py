@@ -9,7 +9,8 @@ from tensorflow.keras.models import load_model
 
 # Streamlit Frontend
 st.markdown("<h2 style='text-align: center;'><u>Santander Customer Transaction Prediction</u></h2>", unsafe_allow_html=True)
-st.write("Santander Bank, N. A., formerly Sovereign Bank, is a wholly owned subsidiary of the Spanish Santander Group. It is based in Boston and its principal market is the northeastern United States. Sovereign Bank was rebranded as Santander Bank on October 17, 2013. In 2018, Santander bank hosted a competition on kaggle to predict whether a particular customer with given details would transact or not. Below are the scores:")
+st.image("https://www.signotec.com/medien/bilder/2018_09_10_santander_logo__1__.png", width=None)
+st.write("Santander Bank, N. A., formerly Sovereign Bank, is a wholly owned subsidiary of the Spanish Santander Group. It is based in Boston and its principal market is the northeastern United States. Sovereign Bank was rebranded as Santander Bank on October 17, 2013. In 2018, Santander bank hosted a competition on kaggle to predict whether a particular customer with given details would transact or not. Below are the kaggle scores and model performace scores:")
 col1, col2, col3, col4, col5 = st.beta_columns([2.9, 1.9, 1.65, 2.4, 2])
 
 with col1:
@@ -33,6 +34,9 @@ uploaded_file = st.file_uploader("",type='txt')
 def run_model(uploaded_file):
 	"""
 	Main function to run ML model
+	- Adding engineered features
+	- Loading the model
+	- predicting the output label
 	"""
 	try:
 		start_time = time.time()
