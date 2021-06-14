@@ -1,2 +1,2 @@
 # Santander-Case-Study
-![](CS1_video.mp4)
+![](CS1_video.gif)
