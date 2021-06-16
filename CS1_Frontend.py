@@ -34,25 +34,26 @@ uploaded_file = st.file_uploader("",type='txt')
 def run_model(uploaded_file):
 	"""
 	Main function to run ML model
-	- Adding engineered features
-	- Loading the model
-	- predicting the output label
 	"""
 	try:
 		start_time = time.time()
+		store_result = []
 		model = pickle.load(open("finalized_model.pkl", 'rb'))
 		file = pd.read_csv(uploaded_file, sep='\t')
 		autoencoder = load_model("autoencoder_model.h5")
-		extra_features = autoencoder.predict(file.iloc[0, 1:].values.astype('float32').reshape(1, 200))
-		total_features = np.append(file.iloc[0, 1:].values.astype('float32').reshape(1, 200), extra_features).reshape(1, -1)
-		if model.predict(total_features)[0] ==1:
-			st.success('Transacted.')
-			st.info(f'Execution time: {round(time.time() - start_time, 2)} seconds')
-		else:
-			st.success('No Transaction.')
+
+		for i in range(len(file)):
+			extra_features = autoencoder.predict(file.iloc[i, 1:].values.astype('float32').reshape(1, 200))
+			total_features = np.append(file.iloc[i, 1:].values.astype('float32').reshape(1, 200), extra_features).reshape(1, -1)
+			if model.predict(total_features)[0] == 1:
+				store_result.append('Transacted')
+			else:
+				store_result.append('No Transaction')
 	except ValueError:
 		st.warning('Upload a text file.')
 
+	st.dataframe(pd.DataFrame({'ID Code': file.iloc[:, 0], 'Prediction': store_result}).assign(hack='').set_index('hack'))
+	st.success(f'Execution time: {round(time.time() - start_time, 2)} seconds')
 
 # Run Model
 if st.button('Predict'):
@@ -60,4 +61,3 @@ if st.button('Predict'):
 	
 
 # streamlit run CS1_Frontend.py
-
